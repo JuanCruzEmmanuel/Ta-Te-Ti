@@ -1,16 +1,32 @@
-# This is a sample Python script.
-
-# Press Mayús+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+import funciones
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
-
-
-# Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    print_hi('PyCharm')
+
+    finalizo = False
+    valusuriao = list()
+    valIA = list()
+    print("Jugar al tateti \nlas posiciones son: \n     0|1|2 \n     3|4|5\n     6|7|8")
+    pos = funciones.crearPosiciones()
+    tablero = funciones.Tablero()
+    turno = funciones.seleccionPersonaje()
+    while not finalizo:
+        if turno == "Jugador":
+            a = int(input("seleccione una posicion: "))
+            funciones.checkNum(a, pos)
+            valusuriao.append(a)
+            fila, columna = funciones.definirNum(a)
+            tablero.update(fila, columna, "X")
+            tablero.mostrar()
+            finalizo, turno = funciones.checkGanar(valusuriao, turno)
+        else:
+            b = funciones.inteligenciaArtificial(pos)
+            valIA.append(b)
+            fila, columna = funciones.definirNum(b)
+            tablero.update(fila, columna, "O")
+            tablero.mostrar()
+            finalizo, turno = funciones.checkGanar(valIA, turno)
+
+    print("Felicidades has ganado", turno)
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/

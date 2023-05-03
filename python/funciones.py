@@ -6,7 +6,7 @@ def seleccionPersonaje():
     if numeroAleatorio % 2 == 0:
         return "Jugador"
     else:
-        return "AI"
+        return "IA"
 
 
 """Con esto me aseguro de elegir correctamente la fila"""
@@ -64,18 +64,44 @@ def checkNum(num, list):
     list.remove(num)
 
 
-
-
-
 def crearPosiciones():
     lista = [x for x in range(9)]
     return lista
 
 
-if __name__ == "__main__":
-    print("Jugar al tateti \nlas posiciones son: \n     0|1|2 \n     3|4|5\n     6|7|8")
-    pos = crearPosiciones()
-    a = int(input("ingrese un valor: "))
-    checkNum(a, pos)
-    definirNum(a)
+def inteligenciaArtificial(list):
+    b = random.choice(list)
+    checkNum(b, list)
+    return b
 
+
+def checkGanar(list,turno):
+    if len(list) >= 3:
+        ganar = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]]
+        for combinacion in ganar:
+            similitud = all(elem in list for elem in combinacion)
+
+            if similitud:
+                return True, turno
+            else:
+                if turno == "Jugador":
+
+                    return False, "IA"
+                else:
+                    return False, "Jugador"
+
+    else:
+        if turno == "Jugador":
+
+            return False, "IA"
+        else:
+            return False, "Jugador"
+
+
+if __name__ == "__main__":
+    pos = crearPosiciones()
+    val = [7]
+    pos.remove(7)
+    pos.remove(4)
+    b = inteligenciaArtificial(pos, val)
+    print(b)
