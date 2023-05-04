@@ -1,5 +1,8 @@
-import funciones
+import sys
 
+sys.path.append("C:/Users/juanc/Desktop/proyectos/ta-te-ti/funciones")
+
+import funciones
 
 if __name__ == '__main__':
 

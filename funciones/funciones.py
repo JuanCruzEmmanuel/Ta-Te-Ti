@@ -99,9 +99,4 @@ def checkGanar(list,turno):
 
 
 if __name__ == "__main__":
-    pos = crearPosiciones()
-    val = [7]
-    pos.remove(7)
-    pos.remove(4)
-    b = inteligenciaArtificial(pos, val)
-    print(b)
+    print("practica")
