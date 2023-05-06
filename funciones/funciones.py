@@ -2,11 +2,8 @@ import random
 
 
 def seleccionPersonaje():
-    numeroAleatorio = random.randint(0, 100)
-    if numeroAleatorio % 2 == 0:
-        return "Jugador"
-    else:
-        return "IA"
+    numeroAleatorio = random.randint(1, 2)
+    return numeroAleatorio
 
 
 """Con esto me aseguro de elegir correctamente la fila"""
@@ -27,22 +24,12 @@ def definirNum(num):
         return fila, columna
 
 
-"""creo y muestro el tablero"""
+"""Cheque el numero clickeado"""
 
 
-class Tablero:
-
-    def __init__(self):
-        self.filas = 3
-        self.columnas = 3
-        self.celdas = [["-"] * self.columnas for _ in range(self.filas)]
-
-    def mostrar(self):
-        for fila in self.celdas:
-            print("|".join(str(celda) for celda in fila))
-
-    def update(self, fila, columna, valor):
-        self.celdas[fila][columna] = valor
+def guardar(fila, col):
+    a = 3 * fila + col
+    return a
 
 
 """chequeo que los numeros que elijo aun se pueden obtener"""
@@ -64,9 +51,14 @@ def checkNum(num, list):
     list.remove(num)
 
 
-def crearPosiciones():
-    lista = [x for x in range(9)]
-    return lista
+def eleccionMovimiento(list):
+    a = random.randint(0, 8)
+    while a in list:
+        a = random.randint(0, 8)
+
+    fila = a // 3
+    col = a - 3 * fila
+    return fila, col
 
 
 def inteligenciaArtificial(list):
@@ -75,7 +67,7 @@ def inteligenciaArtificial(list):
     return b
 
 
-def checkGanar(list,turno):
+def checkGanar(list, turno):
     if len(list) >= 3:
         ganar = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]]
         for combinacion in ganar:
@@ -99,4 +91,4 @@ def checkGanar(list,turno):
 
 
 if __name__ == "__main__":
-    print("practica")
+    print(seleccionPersonaje())

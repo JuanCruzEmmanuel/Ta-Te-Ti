@@ -1,35 +1,57 @@
 import sys
 
 sys.path.append("C:/Users/juanc/Desktop/proyectos/ta-te-ti/funciones")
+sys.path.append("C:/Users/juanc/Desktop/proyectos/ta-te-ti/interfaz")
 
-import funciones
+import funciones, Interfaz2, pygame
 
+pygame.init()
+
+juego = Interfaz2.TaTeTi()
+participante = funciones.seleccionPersonaje()
+#print(participante)
+colect = list()
 if __name__ == '__main__':
 
-    finalizo = False
-    valusuriao = list()
-    valIA = list()
-    print("Jugar al tateti \nlas posiciones son: \n     0|1|2 \n     3|4|5\n     6|7|8")
-    pos = funciones.crearPosiciones()
-    tablero = funciones.Tablero()
-    turno = funciones.seleccionPersonaje()
-    while not finalizo:
-        if turno == "Jugador":
-            a = int(input("seleccione una posicion: "))
-            funciones.checkNum(a, pos)
-            valusuriao.append(a)
-            fila, columna = funciones.definirNum(a)
-            tablero.update(fila, columna, "X")
-            tablero.mostrar()
-            finalizo, turno = funciones.checkGanar(valusuriao, turno)
-        else:
-            b = funciones.inteligenciaArtificial(pos)
-            valIA.append(b)
-            fila, columna = funciones.definirNum(b)
-            tablero.update(fila, columna, "O")
-            tablero.mostrar()
-            finalizo, turno = funciones.checkGanar(valIA, turno)
+    while True:
 
-    print("Felicidades has ganado", turno)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            elif participante == 1:
+                if event.type == pygame.MOUSEBUTTONDOWN and not juego.game_over:
+                    mouseX = event.pos[0]
+                    mouseY = event.pos[1]
+
+                    filaCliqueada = int(mouseY // Interfaz2.TamanCuadrado)
+                    colCliqueada = int(mouseX // Interfaz2.TamanCuadrado)
+                    colect.append(funciones.guardar(filaCliqueada, colCliqueada))
+                    if juego.comprobarVacio(filaCliqueada, colCliqueada):
+                        juego.marca(filaCliqueada, colCliqueada, participante)
+                        if juego.checkVictoria(participante):
+                            juego.game_over = True
+                        elif juego.tableroCompleto():
+                            juego.game_over = True
+                        else:
+                            participante = participante % 2 + 1
+            elif participante == 2:
+                filaCliqueada, colCliqueada = funciones.eleccionMovimiento(colect)
+                juego.marca(filaCliqueada, colCliqueada, participante)
+                if juego.checkVictoria(participante):
+                    juego.game_over = True
+                elif juego.tableroCompleto():
+                    juego.game_over = True
+                else:
+                    participante = participante % 2 + 1
+
+
+            juego.dibujar()
+            if juego.game_over:
+                pygame.time.wait(1000)
+                juego.reinicio()
+            pygame.display.update()
+
+
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/

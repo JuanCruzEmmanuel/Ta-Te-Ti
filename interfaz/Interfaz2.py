@@ -21,7 +21,7 @@ ColorCruz = (66, 66, 66)
 class TaTeTi:
 
     def __init__(self):
-        self.pantalla = pygame.display.set_mode()
+        self.pantalla = pygame.display.set_mode((WIDTH,HEIGHT))
         pygame.display.set_caption("Ta-Te-Ti")
         self.tablero = [[0 for x in range(FILAS)] for y in range(COLUMNAS)]
         self.game_over = False
