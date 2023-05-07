@@ -2,14 +2,15 @@ import sys
 
 sys.path.append("C:/Users/juanc/Desktop/proyectos/ta-te-ti/funciones")
 sys.path.append("C:/Users/juanc/Desktop/proyectos/ta-te-ti/interfaz")
+sys.path.append("C:/Users/juanc/Desktop/proyectos/ta-te-ti/efecto/sonido")
 
-import funciones, Interfaz2, pygame
+
+import funciones, Interfaz2, pygame, pygame.mixer
 
 pygame.init()
 
 juego = Interfaz2.TaTeTi()
 participante = funciones.seleccionPersonaje()
-#print(participante)
 colect = list()
 if __name__ == '__main__':
 
@@ -17,6 +18,7 @@ if __name__ == '__main__':
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                #pygame.mixer.quit()
                 pygame.quit()
                 sys.exit()
             elif participante == 1:
@@ -45,11 +47,13 @@ if __name__ == '__main__':
                 else:
                     participante = participante % 2 + 1
 
-
             juego.dibujar()
+
             if juego.game_over:
                 pygame.time.wait(1000)
                 juego.reinicio()
+                colect = list()
+                participante = funciones.seleccionPersonaje()
             pygame.display.update()
 
 

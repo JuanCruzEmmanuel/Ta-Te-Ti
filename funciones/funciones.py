@@ -55,7 +55,7 @@ def eleccionMovimiento(list):
     a = random.randint(0, 8)
     while a in list:
         a = random.randint(0, 8)
-
+    list.append(a)
     fila = a // 3
     col = a - 3 * fila
     return fila, col
