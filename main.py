@@ -1,8 +1,9 @@
-import sys
+import os,sys
 
-sys.path.append("C:/Users/juanc/Desktop/proyectos/ta-te-ti/funciones")
-sys.path.append("C:/Users/juanc/Desktop/proyectos/ta-te-ti/interfaz")
-sys.path.append("C:/Users/juanc/Desktop/proyectos/ta-te-ti/efecto/sonido")
+
+sys.path.append("funciones")
+sys.path.append("interfaz")
+sys.path.append("sonido")
 
 
 import funciones, Interfaz2, pygame, pygame.mixer
