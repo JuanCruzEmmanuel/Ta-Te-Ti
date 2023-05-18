@@ -19,7 +19,6 @@ if __name__ == '__main__':
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                #pygame.mixer.quit()
                 pygame.quit()
                 sys.exit()
             elif participante == 1:
@@ -37,7 +36,7 @@ if __name__ == '__main__':
                         elif juego.tableroCompleto():
                             juego.game_over = True
                         else:
-                            participante = participante % 2 + 1
+                            participante = -1 if participante == 1 else 1
             elif participante == 2:
                 filaCliqueada, colCliqueada = funciones.eleccionMovimiento(colect)
                 juego.marca(filaCliqueada, colCliqueada, participante)
@@ -46,7 +45,7 @@ if __name__ == '__main__':
                 elif juego.tableroCompleto():
                     juego.game_over = True
                 else:
-                    participante = participante % 2 + 1
+                    participante = -1 if participante == 1 else 1
 
             juego.dibujar()
 
@@ -59,4 +58,4 @@ if __name__ == '__main__':
 
 
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+

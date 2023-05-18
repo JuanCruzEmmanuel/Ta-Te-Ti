@@ -1,4 +1,5 @@
 import pygame, pygame.mixer
+import numpy as np
 
 WIDTH = 600
 HEIGHT = 600
@@ -22,10 +23,15 @@ ColorCruz = (66, 66, 66)
 class TaTeTi:
 
     def __init__(self):
-        self.pantalla = pygame.display.set_mode((WIDTH,HEIGHT))
+        self.pantalla = pygame.display.set_mode((WIDTH, HEIGHT))
         pygame.display.set_caption("Ta-Te-Ti")
-        self.tablero = [[0 for x in range(FILAS)] for y in range(COLUMNAS)]
+        self.tablero = np.zeros((3, 3))
         self.game_over = False
+        self.boardHash = False
+    def getHash(self):
+        self.boardHash = str(
+            self.tablero.reshape(3 * 3))  # esto me va a devolver el hash de la matriz, se reinicia en cada fin de juego
+        return self.boardHash
 
     def dibujarTablero(self):
         # Lineas horizontales
@@ -57,18 +63,25 @@ class TaTeTi:
 
     def comprobarVacio(self, fila, col):
         return self.tablero[fila][col] == 0
-
-    def marca(self, fila, col, participante):
-        self.tablero[fila][col] = participante
-
+    #Marco en funcion al participante
+    def marca(self, posicion, participante):
+        self.tablero[posicion] = participante # Aca el tablero recibe la tupla con las posiciones
+    # Esta linea checkea en cada iteracion si existe alguna marca, en caso de existir llama a dibujar a la figura
     def dibujarFigura(self):
         for fila in range(FILAS):
             for col in range(COLUMNAS):
                 if self.tablero[fila][col] == 1:
                     #sonBurbujas.play()
                     self.circulo(fila, col)
-                elif self.tablero[fila][col] == 2:
+                elif self.tablero[fila][col] == -1:
                     self.cruz(fila, col)
+    def posicionesDisponibles(self): #linea que me devuelve la tupla de las posiciones disponibles. Muy Importante
+        pos = []
+        for i in range(3):
+            for j in range(3):
+                if self.tablero[i][j] == 0:
+                    pos.append((i,j))
+        return pos
 
 
     def tableroCompleto(self):
@@ -121,8 +134,9 @@ class TaTeTi:
 
     def reinicio(self):
 
-        self.tablero = [[0 for x in range(FILAS)] for y in range(COLUMNAS)]
+        self.tablero = np.zeros((3, 3))
         self.game_over = False
+        self.boardHash = False
 
 
 
