@@ -61,8 +61,8 @@ class TaTeTi:
                          (col * TamanCuadrado + TamanCuadrado - Separacion, fila * TamanCuadrado + Separacion),
                          GrosorCruz)
 
-    def comprobarVacio(self, fila, col):
-        return self.tablero[fila][col] == 0
+    def comprobarVacio(self, posicion):
+        return self.tablero[posicion] == 0
     #Marco en funcion al participante
     def marca(self, posicion, participante):
         self.tablero[posicion] = participante # Aca el tablero recibe la tupla con las posiciones

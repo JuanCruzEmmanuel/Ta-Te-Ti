@@ -1,5 +1,7 @@
 """voy a crear una clase player para que interactue con el entorno, este pueda cargar nuevas iteraccion"""
 import numpy as np
+import pickle
+
 
 class Player:
 
@@ -20,7 +22,7 @@ class Player:
 
         if np.random.uniform(0,1) <= self.exp_rate: #esta linea es por el caso si se entrena el agente, va elegir aleatoriamente entre las opciones disponibles
             idx = np.random.choice(len(posicion)) # la posicion es una lista con una serie de tuplas
-            accion = posicion[idx] # al elegir el indice de la lista de tuplas, y luego los valores de la tupla
+            accion = posicion[idx] # al elegir el index de la lista de tuplas, y luego los valores de la tupla
         else:
             maxValue = -999
 
@@ -34,6 +36,26 @@ class Player:
                     maxValue = value
                     accion = pos
         return accion
+
+    def addState(self,state):
+
+        self.state.append(state)
+
+
+    def reset(self):
+        self.state = []
+
+
+    def savePolicy(self):
+        fw = open('policy_' + str(self.nombre), 'wb')
+        pickle.dump(self.state_values, fw)
+        fw.close()
+
+    def loadPolicy(self, file):
+        fr = open(file, 'rb')
+        self.state_values = pickle.load(fr)
+        fr.close()
+
 
 
 

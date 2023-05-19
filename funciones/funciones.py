@@ -3,6 +3,8 @@ import random
 
 def seleccionPersonaje():
     numeroAleatorio = random.randint(1, 2)
+    if numeroAleatorio == 2:
+        numeroAleatorio = -1
     return numeroAleatorio
 
 
